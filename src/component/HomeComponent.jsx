@@ -1,6 +1,7 @@
 import React from 'react'
 import useFetch from '../Hooks/useFetch'
 import '../assets/style/homeComponent.css'
+import Productimage from '../assets/images/productimage.jpeg'
 
 const HomeComponent = () => {
     const { data, loading, error } = useFetch('https://api.escuelajs.co/api/v1/products')
@@ -9,6 +10,7 @@ const HomeComponent = () => {
     return (
         <>
             <div className='vishal'>
+
 
                 {loading && (
                     <div className='loading'> <p>data is loading .... 🏍</p></div>
@@ -25,24 +27,31 @@ const HomeComponent = () => {
                             flatData.map((item) => (
                                 <div key={item.id} class="card">
                                     {/* <img
-                                        src={`${item.category?.image || "https://shorthand.com/the-craft/raster-images/assets/5kVrMqC0wp/sh-unsplash_5qt09yibrok-4096x2731.jpeg"}`}
+                                        src={item?.images?.[0] || Productimage}
                                         alt="Product Image"
                                     /> */}
 
-                                     <img
-                                      src={item.images}
-                                        alt="Product Image"
+                                    <img
+                                        src={item?.images?.[0]}
+                                        alt={item?.title || "Product Image"}
+                                        onError={(e) => {
+                                            e.target.onerror = null; // prevent infinite loop
+                                            e.target.src = Productimage;
+                                        }}
+                                        // style={{ objectFit: "cover", width: "100%", height: "auto" }}
                                     />
-                                      
+
+{/* cors error  -> if not allowd to show the data */}
 
                                     <div class="card-content">
                                         <h3 class="card-title">{item.title}</h3>
                                         <p class="card-price">${item.price}</p>
                                         <p class="card-desc">
-                                            {item.description}
+                                            {item.description.slice(0 , 99)}
+                                             {item.description.length >=100 && "..."}
                                             {/* {item.description===null ? item.description : "vishal"} */}
                                         </p>
-                                    </div>
+                                    </div>+
                                 </div>
                             ))
 
@@ -59,3 +68,4 @@ const HomeComponent = () => {
 }
 
 export default HomeComponent
+

@@ -8,9 +8,14 @@ const useFetch = (url) => {
 
     const fetchData = useCallback(async () => {
         // lets try this
+
         try {
             setLoading(true);
             setError(null);
+
+            if (!navigator.onLine) {
+                throw new Error("You are offline. Please check your internet connection.");
+            }
 
             const responce = await fetch(url);
             if (!responce.ok) {
@@ -33,7 +38,7 @@ const useFetch = (url) => {
         fetchData();
     }, [fetchData]);
 
-  return { data ,loading ,error};
+    return { data, loading, error };
 }
 
 export default useFetch
