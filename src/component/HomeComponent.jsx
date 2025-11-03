@@ -31,6 +31,9 @@ const HomeComponent = () => {
                                         alt="Product Image"
                                     /> */}
 
+                                    {/* cors error  -> if not allowd to show the data */}
+
+
                                     <img
                                         src={item?.images?.[0]}
                                         alt={item?.title || "Product Image"}
@@ -38,17 +41,16 @@ const HomeComponent = () => {
                                             e.target.onerror = null; // prevent infinite loop
                                             e.target.src = Productimage;
                                         }}
-                                        // style={{ objectFit: "cover", width: "100%", height: "auto" }}
+
                                     />
 
-{/* cors error  -> if not allowd to show the data */}
 
                                     <div class="card-content">
                                         <h3 class="card-title">{item.title}</h3>
                                         <p class="card-price">${item.price}</p>
                                         <p class="card-desc">
-                                            {item.description.slice(0 , 99)}
-                                             {item.description.length >=100 && "..."}
+                                            {item.description.slice(0, 99)}
+                                            {item.description.length >= 100 && "..."}
                                             {/* {item.description===null ? item.description : "vishal"} */}
                                         </p>
                                     </div>+
